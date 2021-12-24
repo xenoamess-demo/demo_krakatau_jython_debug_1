@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+}
+
+allprojects {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+    compileJava.options.encoding = 'UTF-8'
+}
+
+repositories {
+    flatDir {
+        dirs "lib"
+    }
+    mavenLocal()
+    mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+    maven {
+        url "https://plugins.gradle.org/m2/"
+    }
+    gradlePluginPortal()
+}
+
+dependencies {
+    implementation group: 'ca.mcgill.sable', name: 'jasmin', version: '3.0.2'
+    implementation group: 'com.xenoamess.shades', name: 'org.ow2.asm.asm-all.v_9_2', version: '9.2'
+    implementation (group: 'com.xenoamess', name: 'krakatau_java_wrapper', version: '0.0.2') {
+        exclude group: 'org.python', module: 'jython'
+    }
+
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.12.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+    implementation group: 'org.apache.commons', name: 'commons-vfs2', version: '2.9.0'
+    implementation group: 'org.python', name: 'jython', version: '2.7.2x'
+
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+}
+
+test {
+    useJUnitPlatform()
+}
